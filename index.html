@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAPZZXD Payment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Graffiti+Font&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: #0f0f1a;
+            color: #fff;
+            perspective: 1000px;
+        }
+
+        .bg-3d {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transform-style: preserve-3d;
+            animation: rotate 20s infinite linear;
+        }
+
+        .cube {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+        }
+
+        .cube:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            transform: scale(0.8);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .cube:nth-child(2) {
+            top: 60%;
+            left: 70%;
+            transform: scale(1.2);
+            animation: float 10s ease-in-out infinite 2s;
+        }
+
+        .cube:nth-child(3) {
+            top: 30%;
+            left: 80%;
+            transform: scale(0.6);
+            animation: float 12s ease-in-out infinite 1s;
+        }
+
+        .cube:nth-child(4) {
+            top: 70%;
+            left: 20%;
+            transform: scale(1);
+            animation: float 9s ease-in-out infinite 0.5s;
+        }
+
+        .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(45deg, rgba(100, 100, 255, 0.2), rgba(255, 100, 255, 0.2));
+            backdrop-filter: blur(5px);
+        }
+
+        .face-front { transform: translateZ(100px); }
+        .face-back { transform: translateZ(-100px) rotateY(180deg); }
+        .face-right { transform: rotateY(90deg) translateZ(100px); }
+        .face-left { transform: rotateY(-90deg) translateZ(100px); }
+        .face-top { transform: rotateX(90deg) translateZ(100px); }
+        .face-bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+        @keyframes rotate {
+            0% { transform: rotateX(0) rotateY(0); }
+            100% { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(var(--scale)); }
+            50% { transform: translateY(-20px) scale(var(--scale)); }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .title {
+            font-family: 'Graffiti Font', cursive;
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 
+                3px 3px 0 #ff00ff,
+                6px 6px 0 #00ffff,
+                9px 9px 20px rgba(0, 0, 0, 0.5);
+            transform: rotate(-5deg);
+            animation: titleGlow 2s infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            animation: slideUp 1s ease-out;
+        }
+
+        .payment-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .payment-icon {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .payment-details {
+            margin-top: 20px;
+        }
+
+        .payment-number {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            word-break: break-all;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .qris-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .qris-image:hover {
+            transform: scale(1.03);
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s, background 0.3s;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .whatsapp { background: #25D366; }
+        .telegram { background: #0088cc; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 
+                3px 3px 0 #ff00ff,
+                6px 6px 0 #00ffff,
+                9px 9px 20px rgba(0, 0, 0, 0.5); }
+            to { text-shadow: 
+                3px 3px 10px #ff00ff,
+                6px 6px 10px #00ffff,
+                9px 9px 30px rgba(0, 0, 0, 0.7); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-3d">
+        <div class="cube" style="--scale: 0.8;">
+            <div class="face face-front"></div>
+            <div class="face face-back"></div>
+            <div class="face face-right"></div>
+            <div class="face face-left"></div>
+            <div class="face face-top"></div>
+            <div class="face face-bottom"></div>
+        </div>
+        <div class="cube" style="--scale: 1.2;">
+            <div class="face face-front"></div>
+            <div class="face face-back"></div>
+            <div class="face face-right"></div>
+            <div class="face face-left"></div>
+            <div class="face face-top"></div>
+            <div class="face face-bottom"></div>
+        </div>
+        <div class="cube" style="--scale: 0.6;">
+            <div class="face face-front"></div>
+            <div class="face face-back"></div>
+            <div class="face face-right"></div>
+            <div class="face face-left"></div>
+            <div class="face face-top"></div>
+            <div class="face face-bottom"></div>
+        </div>
+        <div class="cube" style="--scale: 1;">
+            <div class="face face-front"></div>
+            <div class="face face-back"></div>
+            <div class="face face-right"></div>
+            <div class="face face-left"></div>
+            <div class="face face-top"></div>
+            <div class="face face-bottom"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">HAI!! INI DIA PAYMENT RAPZZXD</h1>
+            <p class="subtitle">Pilih metode pembayaran yang tersedia</p>
+        </header>
+
+        <div class="payment-methods">
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon" style="color: #00a3e0;">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h2 class="payment-title">DANA</h2>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-number">
+                        6287864252521
+                        <button class="copy-btn" onclick="copyToClipboard('6287864252521')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <p>Transfer ke nomor DANA di atas</p>
+                </div>
+            </div>
+
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon" style="color: #00aa13;">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h2 class="payment-title">GOPAY</h2>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-number">
+                        MINTA QRIS!!
+                        <button class="copy-btn" onclick="copyToClipboard('MINTA QRIS!!')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <p>Scan QRIS di bawah untuk pembayaran</p>
+                    <img src="https://files.catbox.moe/57jlb8.jpg" alt="QRIS GOPAY" class="qris-image">
+                </div>
+            </div>
+
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon" style="color: #662d91;">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h2 class="payment-title">OVO</h2>
+                </div>
+                <div class="payment-details">
+                    <div class="payment-number">
+                        MINTA QRIS!!
+                        <button class="copy-btn" onclick="copyToClipboard('MINTA QRIS!!')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <p>Scan QRIS di bawah untuk pembayaran</p>
+                    <img src="https://files.catbox.moe/57jlb8.jpg" alt="QRIS OVO" class="qris-image">
+                </div>
+            </div>
+
+            <div class="payment-card">
+                <div class="payment-header">
+                    <div class="payment-icon" style="color: #ff6600;">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h2 class="payment-title">QRIS</h2>
+                </div>
+                <div class="payment-details">
+                    <p>Scan QR code di bawah untuk pembayaran</p>
+                    <img src="https://files.catbox.moe/57jlb8.jpg" alt="QRIS" class="qris-image">
+                    <p style="margin-top: 15px;">Dapat digunakan untuk berbagai e-wallet</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-links">
+            <a href="https://wa.me/6283142735216" class="contact-link whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="https://t.me/rapzstrp" class="contact-link telegram" target="_blank">
+                <i class="fab fa-telegram"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard: ' + text);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        // Enhanced 3D background animation
+        document.addEventListener('mousemove', (e) => {
+            const bg = document.querySelector('.bg-3d');
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            bg.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+    </script>
+</body>
+</html>
